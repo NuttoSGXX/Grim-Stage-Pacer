@@ -40,5 +40,5 @@
 
 ## ติดตั้ง
 
-Manifest URL: `https://github.com/NuttoSGXX/stage-pacer/releases/latest/download/module.json`
+Manifest URL: `https://github.com/NuttoSGXX/Grim-Stage-Pacer/releases/latest/download/module.json`
 (แนบ `module.json` และ `module.zip` ไว้ใน GitHub Release แท็ก `v0.1.0`)

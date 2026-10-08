@@ -1,0 +1,14 @@
+{
+  "id": "stage-pacer",
+  "title": "Stage Pacer",
+  "description": "Table-pacing signals for the DM and players: a quiet running ticker at the top of the screen (Star of Stage, Next Scene, Your Cue, Wants the Mic, Thinking), a BRB lamp roster, and a fade-to-black Intermission / Session End curtain that returns everyone to a home scene.",
+  "version": "0.1.0",
+  "authors": [{ "name": "NuttoSGXX" }],
+  "compatibility": { "minimum": "13", "verified": "14" },
+  "esmodules": ["scripts/stage-pacer.js"],
+  "styles": ["styles/stage-pacer.css"],
+  "socket": true,
+  "url": "https://github.com/NuttoSGXX/stage-pacer",
+  "manifest": "https://github.com/NuttoSGXX/stage-pacer/releases/latest/download/module.json",
+  "download": "https://github.com/NuttoSGXX/stage-pacer/releases/download/v0.1.0/module.zip"
+}

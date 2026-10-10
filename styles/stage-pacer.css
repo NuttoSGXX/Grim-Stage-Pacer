@@ -9,6 +9,18 @@
   --sp-accent-hi: #ff5a66;
   --sp-line: rgba(200, 16, 46, 0.42);
   --sp-shadow: rgba(0, 0, 0, 0.7);
+  /* accent that stays readable as small text on the panel surface */
+  --sp-accent-ink: #ff5a66;
+  --sp-well: rgba(0, 0, 0, 0.28);
+  /* curtain: always a dark stage, only its tint follows the theme */
+  --sp-veil-1: #120a0c;
+  --sp-veil-2: #050304;
+  --sp-title: #efe6df;
+  --sp-title-end: #ff5a66;
+  --sp-title-glow: #c8102e;
+  --sp-sub: #9d8f89;
+  --sp-hint: #5b5250;
+  /* signal colours: never themed (Grim Core skips these three) */
   --sp-red: #ee3f46;
   --sp-yellow: #f0bb3c;
   --sp-blue: #55bdf5;
@@ -21,15 +33,30 @@
 html[data-sp-theme="ash"] .sp-root {
   --sp-bg: #0a0a0b; --sp-bg2: #18181a; --sp-ink: #ececec; --sp-dim: #8a8a8e;
   --sp-accent: #b9b9be; --sp-accent-hi: #ffffff; --sp-line: rgba(200, 200, 206, 0.4);
+  --sp-accent-ink: #ffffff;
+  --sp-veil-1: #101011; --sp-veil-2: #040404;
+  --sp-title: #ececec; --sp-title-end: #ffffff; --sp-title-glow: #8f8f94;
+  --sp-sub: #96969a; --sp-hint: #555558;
 }
 html[data-sp-theme="amethyst"] .sp-root {
   --sp-bg: #f3eff8; --sp-bg2: #e2d9ee; --sp-ink: #2a1c3d; --sp-dim: #7d6c96;
   --sp-accent: #7a3fc4; --sp-accent-hi: #a36bf0; --sp-line: rgba(122, 63, 196, 0.45);
   --sp-shadow: rgba(40, 20, 70, 0.45);
+  --sp-accent-ink: #6229b8;
+  --sp-well: rgba(122, 63, 196, 0.09);
+  --sp-veil-1: #130c1f; --sp-veil-2: #06040a;
+  --sp-title: #efe9f8; --sp-title-end: #c9a4ff; --sp-title-glow: #7a3fc4;
+  --sp-sub: #a396bb; --sp-hint: #5d5470;
 }
+/* on a light panel the signal colours need more weight; the ticker keeps the bright ones */
+html[data-sp-theme="amethyst"] .sp-panel { --sp-red: #c9202c; --sp-yellow: #a87400; --sp-blue: #1273b8; }
 html[data-sp-theme="abyss"] .sp-root {
   --sp-bg: #070a10; --sp-bg2: #0f1622; --sp-ink: #dde6f2; --sp-dim: #7787a0;
   --sp-accent: #2f7fe0; --sp-accent-hi: #7ab8ff; --sp-line: rgba(47, 127, 224, 0.45);
+  --sp-accent-ink: #7ab8ff;
+  --sp-veil-1: #0a101c; --sp-veil-2: #030509;
+  --sp-title: #e3ebf7; --sp-title-end: #7ab8ff; --sp-title-glow: #2f7fe0;
+  --sp-sub: #8695ad; --sp-hint: #4c5568;
 }
 
 .sp-red { --c: var(--sp-red); }
@@ -147,7 +174,7 @@ html[data-sp-theme="abyss"] .sp-root {
 }
 .sp-role {
   font-size: 8.5px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--sp-accent-hi);
+  color: var(--sp-accent-ink);
   padding: 2px 5px 1px;
   border: 1px solid var(--sp-line);
 }
@@ -165,7 +192,7 @@ html[data-sp-theme="abyss"] .sp-root {
 
 .sp-mini { width: 18px; height: 18px; color: var(--sp-dim); transition: color 0.15s, transform 0.25s; }
 .sp-mini svg { width: 13px; height: 13px; }
-.sp-mini:hover { color: var(--sp-accent-hi); }
+.sp-mini:hover { color: var(--sp-accent-ink); }
 .sp-panel.is-folded .sp-fold { transform: rotate(-90deg); }
 
 /* ---- signal buttons ---- */
@@ -206,7 +233,7 @@ html[data-sp-theme="abyss"] .sp-root {
 .sp-menu {
   margin: 0 11px 8px; padding: 8px 8px 9px;
   display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
-  background: rgba(0, 0, 0, 0.28);
+  background: var(--sp-well);
   border: 1px solid color-mix(in srgb, var(--sp-accent) 28%, transparent);
   animation: sp-menu-in 0.2s ease-out;
 }
@@ -225,7 +252,7 @@ html[data-sp-theme="abyss"] .sp-root {
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 .sp-root .sp-choice:hover { border-color: var(--sp-accent-hi); background: color-mix(in srgb, var(--sp-accent) 26%, transparent); }
-.sp-root .sp-choice-end { color: var(--sp-accent-hi); }
+.sp-root .sp-choice-end { color: var(--sp-accent-ink); }
 .sp-home { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; margin-top: 2px; }
 .sp-home span { flex: none; font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sp-dim); }
 .sp-root .sp-home select {
@@ -243,7 +270,7 @@ html[data-sp-theme="abyss"] .sp-root {
   font-size: 8.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sp-dim);
   border-bottom: 1px solid color-mix(in srgb, var(--sp-accent) 20%, transparent);
 }
-.sp-roster-head .sp-count { margin-right: auto; color: var(--sp-accent-hi); letter-spacing: 0.08em; }
+.sp-roster-head .sp-count { margin-right: auto; color: var(--sp-accent-ink); letter-spacing: 0.08em; }
 .sp-roster { list-style: none; margin: 0; padding: 4px 11px 0; max-height: 240px; overflow-y: auto; }
 .sp-roster li {
   display: flex; align-items: center; gap: 8px;
@@ -261,7 +288,7 @@ html[data-sp-theme="abyss"] .sp-root {
 }
 @keyframes sp-lamp { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(0.82); } }
 .sp-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; }
-.sp-roster li.is-self .sp-name { color: color-mix(in srgb, var(--sp-accent-hi) 35%, var(--sp-ink)); }
+.sp-roster li.is-self .sp-name { color: color-mix(in srgb, var(--sp-accent-ink) 35%, var(--sp-ink)); }
 .sp-roster li.is-away .sp-name { color: var(--sp-dim); }
 .sp-roster li.is-away .sp-lamp {
   background: color-mix(in srgb, var(--sp-bg) 80%, #000) !important;
@@ -271,7 +298,7 @@ html[data-sp-theme="abyss"] .sp-root {
 .sp-brb { font-size: 8px; font-weight: 600; letter-spacing: 0.18em; color: var(--sp-dim); border: 1px solid color-mix(in srgb, var(--sp-dim) 50%, transparent); padding: 2px 3px 1px 4px; }
 .sp-root .sp-mark { width: 16px; height: 16px; color: var(--c); }
 .sp-mark svg { width: 13px; height: 13px; filter: drop-shadow(0 0 3px var(--c)); }
-.sp-root button.sp-mark:hover { color: #fff; }
+.sp-root button.sp-mark:hover { color: var(--sp-ink); }
 
 /* ================================================================== */
 /*  Curtain                                                           */
@@ -282,7 +309,7 @@ html[data-sp-theme="abyss"] .sp-root {
   z-index: 9990;
   display: grid; place-items: center;
   pointer-events: none;
-  background: radial-gradient(ellipse 70% 55% at 50% 52%, #120a0c 0%, #050304 55%, #000 100%);
+  background: radial-gradient(ellipse 70% 55% at 50% 52%, var(--sp-veil-1) 0%, var(--sp-veil-2) 55%, #000 100%);
   animation: sp-curtain-in 2.2s ease-in both;
   transition: opacity 2.6s ease;
 }
@@ -296,11 +323,10 @@ html[data-sp-theme="abyss"] .sp-root {
   font: 400 clamp(40px, 7.4vw, 124px)/1 var(--sp-display);
   white-space: nowrap;
   letter-spacing: 0.16em; text-indent: 0.16em; text-transform: uppercase;
-  color: #efe6df;
-  text-shadow: 0 0 34px color-mix(in srgb, var(--sp-accent) 60%, transparent);
+  color: var(--sp-title);
+  text-shadow: 0 0 34px color-mix(in srgb, var(--sp-title-glow) 60%, transparent);
 }
-.sp-kind-end .sp-curtain-title { color: var(--sp-accent-hi); text-shadow: 0 0 18px var(--sp-accent), 0 0 60px color-mix(in srgb, var(--sp-accent) 70%, transparent); }
-html[data-sp-theme="amethyst"] .sp-kind-end .sp-curtain-title { color: #c9a4ff; }
+.sp-kind-end .sp-curtain-title { color: var(--sp-title-end); text-shadow: 0 0 18px var(--sp-title-glow), 0 0 60px color-mix(in srgb, var(--sp-title-glow) 70%, transparent); }
 .sp-curtain-title span {
   display: inline-block;
   opacity: 0;
@@ -312,13 +338,13 @@ html[data-sp-theme="amethyst"] .sp-kind-end .sp-curtain-title { color: #c9a4ff; 
 .sp-curtain-rule { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0.9vw 0 1.3vw; height: 10px; }
 .sp-curtain-rule i {
   display: block; height: 1px; width: 0;
-  background: linear-gradient(90deg, var(--sp-accent-hi), var(--sp-accent) 40%, transparent);
+  background: linear-gradient(90deg, var(--sp-title-end), var(--sp-title-glow) 40%, transparent);
   animation: sp-rule 1.5s 2.3s cubic-bezier(0.3, 0.6, 0.2, 1) forwards;
 }
 .sp-curtain-rule i:first-child { transform: scaleX(-1); }
 .sp-curtain-rule b {
   width: 7px; height: 7px; transform: rotate(45deg) scale(0);
-  background: var(--sp-accent-hi); box-shadow: 0 0 10px var(--sp-accent);
+  background: var(--sp-title-end); box-shadow: 0 0 10px var(--sp-title-glow);
   animation: sp-gem 0.5s 2.15s ease-out forwards;
 }
 @keyframes sp-rule { to { width: min(28vw, 380px); } }
@@ -328,17 +354,28 @@ html[data-sp-theme="amethyst"] .sp-kind-end .sp-curtain-title { color: #c9a4ff; 
   margin: 0;
   font: 400 clamp(12px, 1.25vw, 18px)/1.4 var(--sp-text);
   letter-spacing: 0.3em; text-transform: uppercase;
-  color: #9d8f89;
+  color: var(--sp-sub);
   opacity: 0;
   animation: sp-sub 1.4s 3.1s ease-out forwards;
 }
 @keyframes sp-sub { to { opacity: 1; } }
 .sp-curtain-hint {
   position: absolute; left: 0; right: 0; bottom: 26px; text-align: center;
-  font: 400 10px/1 var(--sp-text); letter-spacing: 0.25em; text-transform: uppercase; color: #5b5250;
+  font: 400 10px/1 var(--sp-text); letter-spacing: 0.25em; text-transform: uppercase; color: var(--sp-hint);
   opacity: 0; animation: sp-sub 1s 4.5s forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sp-panel::after, .sp-btn.is-on::before, .sp-lamp, .sp-strip::after { animation: none; }
 }
+
+/* ================================================================== */
+/*  Settings note shown while Grim Core manages the colour theme       */
+/* ================================================================== */
+
+.sp-core-note {
+  flex: 0 0 100%;
+  display: flex; align-items: center; gap: 8px;
+  margin: 4px 0 0; font-size: 12px; opacity: 0.9;
+}
+.sp-core-note button { flex: none; width: auto; min-height: 0; line-height: 1; padding: 4px 9px; font-size: 12px; white-space: nowrap; }

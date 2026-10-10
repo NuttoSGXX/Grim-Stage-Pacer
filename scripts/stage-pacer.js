@@ -409,7 +409,58 @@ function createPanel() {
 /*  Wiring                                                             */
 /* ------------------------------------------------------------------ */
 
-const applyTheme = () => document.documentElement.setAttribute("data-sp-theme", setting("theme"));
+const THEMES = { crimson: "Black & Red", ash: "Black, Grey & White", amethyst: "White & Purple", abyss: "Black & Blue" };
+
+function applyTheme() {
+  const theme = setting("theme");
+  document.documentElement.setAttribute("data-sp-theme", theme in THEMES ? theme : "crimson");
+}
+
+/* ------------------------------------------------------------------ */
+/*  Grim Core (optional hub module that themes every Grim module)      */
+/* ------------------------------------------------------------------ */
+
+const CORE = "grim-core";
+
+/** Grim Core's shared theme while it is driving Stage Pacer, otherwise null. */
+function grimCoreTheme() {
+  if (!game.modules.get(CORE)?.active) return null;
+  try {
+    const theme = game.settings.get(CORE, "theme");
+    if (!theme || typeof theme !== "object") return null;
+    if (Array.isArray(theme.off) && theme.off.includes(MOD)) return null; // unticked under "Modules that follow"
+    return theme;
+  } catch (err) {
+    return null; // Grim Core not initialised (or an older build without this setting)
+  }
+}
+
+/** While Grim Core drives the theme, lock Stage Pacer's own dropdown and say why. */
+function markThemeManaged(html) {
+  const root = html instanceof HTMLElement ? html : html?.[0];
+  const select = root?.querySelector?.(`select[name="${MOD}.theme"]`);
+  if (!select) return;
+  const group = select.closest(".form-group") ?? select.parentElement;
+  group.querySelector(".sp-core-note")?.remove();
+
+  const theme = grimCoreTheme();
+  select.disabled = !!theme;
+  if (!theme) return;
+
+  const note = document.createElement("p");
+  note.className = "sp-core-note hint";
+  const label = theme.preset === "custom" ? `a custom colour (${theme.accent ?? "accent"})` : THEMES[theme.preset] ?? theme.preset;
+  note.innerHTML = `<span><i class="fa-solid fa-palette"></i> Managed by <b>Grim Core</b> — currently ${esc(label)}. Change it there, or untick Stage Pacer under “Modules that follow” to choose here.</span>`;
+  const open = game.modules.get(CORE)?.api?.open;
+  if (game.user.isGM && typeof open === "function") {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "Open Grim Core";
+    btn.addEventListener("click", (ev) => { ev.preventDefault(); open(); });
+    note.appendChild(btn);
+  }
+  group.appendChild(note);
+}
 
 let refreshQueued = false;
 function refresh() {
@@ -427,9 +478,9 @@ Hooks.once("init", () => {
 
   reg("theme", {
     name: "Colour theme",
-    hint: "Set by the DM, applied to every player. Signal colours (red / yellow / blue) stay the same in every theme.",
+    hint: "Set by the DM, applied to every player. Signal colours (red / yellow / blue) stay the same in every theme. If Grim Core is active, it sets this for you.",
     scope: "world", config: true, type: String, default: "crimson",
-    choices: { crimson: "Black & Red", ash: "Black, Grey & White", amethyst: "White & Purple", abyss: "Black & Blue" },
+    choices: THEMES,
     onChange: () => applyTheme()
   });
   reg("nameMode", {
@@ -476,5 +527,11 @@ Hooks.once("ready", () => {
     if (setting("nameMode") === "character" && game.users.some((u) => u.character?.id === actor.id)) refresh();
   });
 
-  game.modules.get(MOD).api = { toggleSignal, lowerCurtain, raiseCurtain: raiseCurtainForAll, clearAllSignals };
+  Hooks.on("renderSettingsConfig", (app, html) => markThemeManaged(html));
+
+  game.modules.get(MOD).api = {
+    toggleSignal, lowerCurtain, raiseCurtain: raiseCurtainForAll, clearAllSignals,
+    /** { theme, managedBy } — managedBy is "grim-core" while the hub drives the colours. */
+    theme: () => ({ theme: setting("theme"), managedBy: grimCoreTheme() ? CORE : null })
+  };
 });

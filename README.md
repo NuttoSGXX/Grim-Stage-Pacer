@@ -1,60 +1,74 @@
 # Stage Pacer
 
-โมดูล Foundry VTT (V13 / V14) สำหรับคุมจังหวะโต๊ะ: ปุ่มสัญญาณของ DM และผู้เล่นแยกกัน
-กดแล้วมีแถบข้อความวิ่งบาง ๆ ที่ขอบบนของจอทุกคน ธีมดำ–แดงชุดเดียวกับ Grim Almanac / Grim Pulse
+**v1.0.0** · Foundry VTT V13–V14 · © DM Bank
 
-## ปุ่ม
+Discord: https://discord.gg/XWfgWKpxJp
 
-| ฝั่ง | ปุ่ม | แถบ | ข้อความที่วิ่ง |
+---
+
+Table-pacing signals: separate signal buttons for the DM and the players. Pressing one runs a thin ticker across the top of everyone's screen. Also includes a BRB lamp roster and a fade-to-black curtain for breaks and the end of a session.
+
+## Signal buttons
+
+| Side | Button | Strip | Ticker text |
 |---|---|---|---|
-| DM | ดาว | แดง | DM · STAR OF STAGE — Hold your lines — please don't interrupt |
-| DM | ไปข้างหน้า | เหลือง | NEXT SCENE — Wrap it up — the story moves on |
-| DM | ไมค์ | ฟ้า | YOUR CUE — The stage is yours — speak up or answer |
-| DM | สี่เหลี่ยม | – | เปิดเมนู Intermission / Session End |
-| Player | ดาว | แดง | {ชื่อ} IS STAR OF STAGE — Spotlight, please — let them finish |
-| Player | ไมค์ | ฟ้า | {ชื่อ} WANTS THE MIC — More to say — may I continue? |
-| Player | หลอดไฟ | เหลือง | {ชื่อ} IS THINKING — Give them a moment |
-| Player | ประตู | – | ดับ/เปิดไฟหน้าชื่อตัวเองในรายชื่อ (BRB) ไม่มีแถบแจ้งเตือน |
+| DM | Star | Red | DM · STAR OF STAGE — Hold your lines — please don't interrupt |
+| DM | Forward | Yellow | NEXT SCENE — Wrap it up — the story moves on |
+| DM | Mic | Blue | YOUR CUE — The stage is yours — speak up or answer |
+| DM | Square | – | Opens the Intermission / Session End menu |
+| Player | Star | Red | {name} IS STAR OF STAGE — Spotlight, please — let them finish |
+| Player | Mic | Blue | {name} WANTS THE MIC — More to say — may I continue? |
+| Player | Bulb | Yellow | {name} IS THINKING — Give them a moment |
+| Player | Door | – | Turns your own lamp in the roster off / on (BRB). No ticker. |
 
-- ปุ่มสัญญาณเป็นแบบกดเปิด / กดซ้ำเพื่อปิด แต่ละคนเปิดได้ทีละหนึ่งสัญญาณ
-- หลายคนกดพร้อมกันได้ แถบจะซ้อนกันลงมา (ของ DM อยู่บนสุด)
-- DM กดไอคอนสัญญาณท้ายชื่อผู้เล่นเพื่อเคลียร์ให้ หรือกด ✕ เพื่อเคลียร์ทั้งหมด และกดดวงไฟหน้าชื่อเพื่อเปิด/ดับแทนผู้เล่นได้
+- Signals toggle: press to raise, press again to clear. Each person can hold one signal at a time.
+- Several people can signal at once; the strips stack (the DM's on top).
+- The DM can click the signal icon after a player's name to clear it, press ✕ to clear all, and click the lamp before a name to switch it for that player.
 
-## ปิดม่าน (ปุ่มสี่เหลี่ยมของ DM)
+## Curtain (the DM's square button)
 
-เลือก **Intermission** (พักเบรก) หรือ **Session End** จอทุกคนค่อย ๆ เฟดดำ ตัวอักษรขึ้นทีละตัว
-เส้นใต้ลากออกจากกลาง แล้วตามด้วยประโยคสุ่ม 1 ใน 6 จากนั้นย้ายทุกคนไปซีนที่เลือกไว้ใน **Return to**
-(จำค่าไว้ให้ เลือก "Stay on this scene" ถ้าไม่ต้องการย้าย) DM คลิกจอเพื่อเปิดม่านก่อนเวลาได้
+Choose **Intermission** or **Session End**. Every screen fades to black, the title appears letter by letter, followed by one of six random lines, then everyone is moved to the scene chosen under **Return to** (pick "Stay on this scene" to stay). The DM can click the screen to raise the curtain early.
 
-## Settings
+## Settings (Configure Settings → Stage Pacer)
 
-- Colour theme — ดำแดง / ดำเทาขาว / ขาวม่วง / ดำน้ำเงิน (DM ตั้ง ใช้กับทุกคน)
-- Name shown for players — ชื่อผู้เล่น หรือชื่อตัวละครที่ผูกไว้
-- Curtain hold time — จอดำค้างกี่วินาที (0 = ค้างจนกว่า DM จะคลิก)
-- Auto-clear signals after — ให้สัญญาณดับเองหลังกี่วินาที (0 = ค้างจนกดปิด)
-- Ticker offset from top — เลื่อนแถบวิ่งลงมาถ้าบังอะไรบนจอ (เฉพาะเครื่องตัวเอง)
+- **Colour theme** — black & red / black, grey & white / white & purple / black & blue (set by the DM for everyone)
+- **Name shown for players** — player name or assigned character name
+- **Curtain hold time** — seconds the black screen stays (0 = until the DM clicks)
+- **Auto-clear signals after** — seconds before a signal clears itself (0 = until pressed again)
+- **Ticker offset from top** — move the ticker down if it covers something (your screen only)
 
-## ใช้ร่วมกับ Grim Core
+## With Grim Core
 
-ถ้าเปิดโมดูล [Grim Core](https://github.com/NuttoSGXX/Grim_Core) ไว้ด้วย สีของ Stage Pacer จะตามธีมกลางของ Grim Core
+With the Grim Core module active, Stage Pacer follows Grim Core's shared theme: the four built-in themes and Custom. The red / yellow / blue signal colours never change. While Grim Core is in charge, Stage Pacer's own Colour theme field is locked and shows an Open Grim Core button. To let Stage Pacer keep its own colours, untick it under Modules that follow in Grim Core. Stage Pacer works normally without Grim Core.
 
-- ธีมสำเร็จรูป 4 แบบ (Crimson / Ash / Amethyst / Abyss) และ **Custom** (เลือกสี accent เอง พื้นมืดหรือสว่าง) ใช้ได้ทั้งหน้าต่างปุ่ม รายชื่อ และฉากปิดม่าน
-- สีสัญญาณ แดง / เหลือง / ฟ้า ไม่เปลี่ยนตามธีม
-- ระหว่างที่ Grim Core คุมอยู่ ช่อง Colour theme ของ Stage Pacer จะถูกล็อก พร้อมปุ่ม Open Grim Core
-- ถ้าอยากให้ Stage Pacer ใช้สีของตัวเอง ให้เอาติ๊ก Stage Pacer ออกในหัวข้อ Modules that follow ของ Grim Core
-- ไม่มี Grim Core ก็ใช้งานได้ตามปกติ
+## Install
 
-## แก้ข้อความ
+**With the manifest URL (recommended)**
 
-ข้อความทั้งหมดอยู่ต้นไฟล์ `scripts/stage-pacer.js` ในตัวแปร `SIGNALS` และ `CURTAIN`
+1. In Foundry, go to **Setup → Add-on Modules → Install Module**.
+2. Paste this into **Manifest URL** and press **Install**:
+   ```
+   https://github.com/NuttoSGXX/Grim-Stage-Pacer/releases/latest/download/module.json
+   ```
+3. Enable the module under Manage Modules in your world.
 
-## ติดตั้ง
+**By hand**
 
-Manifest URL: `https://github.com/NuttoSGXX/Grim-Stage-Pacer/releases/latest/download/module.json`
+1. Download `module.zip` from the [latest release](https://github.com/NuttoSGXX/Grim-Stage-Pacer/releases/latest) and unzip it into a folder named `stage-pacer`.
+2. Move the `stage-pacer` folder into Foundry's `Data/modules/` (find the location under Setup → Configuration → User Data Path).
+3. Check that `Data/modules/stage-pacer/module.json` exists, then restart Foundry and enable the module.
 
-ทุก Release ให้แนบไฟล์ `module.json` และ `module.zip` (ลิงก์ดาวน์โหลดชี้ไปที่ Release ล่าสุดเสมอ จึงตั้งชื่อแท็กอะไรก็ได้ เช่น `v0.2.0`)
+Players install nothing; only the machine hosting the game needs the module. On The Forge, install it with the same manifest URL.
 
-## Changelog
+**Updating:** use **Update** on the module in Foundry's Add-on Modules tab. Your world's settings are kept.
 
-- **0.2.0** — ทำงานร่วมกับ Grim Core: สีทุกส่วนเป็น token ให้ธีม Custom ย้อมได้ครบ (รวมฉากปิดม่าน), ล็อกช่อง Colour theme ขณะ Grim Core คุม, ธีมพื้นสว่างอ่านง่ายขึ้น
-- **0.1.0** — เวอร์ชันแรก
+## Terms of use
+
+© 2026 DM Bank. All rights reserved.
+
+- Do not resell, share or redistribute this module or its files.
+- You may use it as a tool for paid D&D games (commissions) and for livestreams.
+
+## Contact / support
+
+Discord: https://discord.gg/XWfgWKpxJp
